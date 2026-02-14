@@ -152,6 +152,11 @@ class PermissionResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
