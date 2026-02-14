@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -10,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class UsersTable
 {
@@ -70,6 +72,33 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make()
+                    ->visible(function ($record) {
+                        $currentUser = Auth::user();
+
+                        if (! $currentUser->is_admin) {
+                            return false;
+                        }
+
+                        if ($record->id === $currentUser->id) {
+                            return false;
+                        }
+
+                        if ($record->is_admin) {
+                            return false;
+                        }
+
+                        return true;
+                    })
+                    ->before(function ($record) {
+                        if ($record->is_admin) {
+                            throw new \Exception('Cannot delete admin users');
+                        }
+
+                        if ($record->id === Auth::id()) {
+                            throw new \Exception('Cannot delete your own account');
+                        }
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

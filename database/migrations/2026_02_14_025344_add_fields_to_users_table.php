@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('avatar', 512)->nullable()->after('phone_number');
             $table->boolean('is_admin')->default(false)->after('password');
             $table->boolean('is_active')->default(false)->after('is_admin');
+
+            $table->unsignedBigInteger('country_id')->nullable();
+
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 
@@ -25,7 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['phone_number', 'avatar', 'is_admin', 'is_active']);
+            $table->dropForeign('users_country_id_foreign');
+            $table->dropColumn(['phone_number', 'avatar', 'is_admin', 'is_active', 'country_id']);
         });
     }
 };

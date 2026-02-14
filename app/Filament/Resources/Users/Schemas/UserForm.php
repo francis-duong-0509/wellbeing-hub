@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class UserForm
 {
@@ -82,6 +84,34 @@ class UserForm
                             ->maxSize(2048)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                     ]),
+
+                Section::make(__('users.form.sections.role'))
+                    ->schema([
+                        Select::make('roles')
+                            ->label(__('users.form.fields.role'))
+                            ->multiple()
+                            ->relationship('roles', 'name')
+                            ->getOptionLabelFromRecordUsing(fn ($record) => match ($record->name) {
+                                'super_admin' => 'Administrator',
+                                'panel_user' => 'General Member',
+                                default => ucwords(str_replace('_', ' ', $record->name)),
+                            })
+                            ->preload()
+                            ->searchable()
+                            ->helperText(__('users.form.help_text.role'))
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Role Name')
+                                    ->required()
+                                    ->unique()
+                                    ->maxLength(255),
+                                TextInput::make('guard_name')
+                                    ->label('Guard')
+                                    ->default('web')
+                                    ->required(),
+                            ]),
+                    ])
+                    ->collapsible(),
             ]);
     }
 }

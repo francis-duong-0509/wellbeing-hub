@@ -42,6 +42,7 @@ return [
             'security' => 'Bảo mật',
             'profile' => 'Hồ sơ',
             'permissions' => 'Phân quyền',
+            'role' => 'Vai trò & Quyền hạn',
         ],
         'fields' => [
             'name' => 'Tên',
@@ -52,6 +53,7 @@ return [
             'avatar' => 'Ảnh đại diện',
             'is_admin' => 'Quản trị viên',
             'is_active' => 'Hoạt động',
+            'role' => 'Vai trò',
         ],
         'placeholders' => [
             'name' => 'Nhập họ và tên',
@@ -62,6 +64,7 @@ return [
         'help_text' => [
             'is_admin' => 'Cấp quyền quản trị cho người dùng này',
             'is_active' => 'Kích hoạt hoặc vô hiệu hóa tài khoản người dùng',
+            'role' => 'Gán một hoặc nhiều vai trò cho người dùng này',
         ],
     ],
 

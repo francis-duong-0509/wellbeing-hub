@@ -47,6 +47,7 @@ return [
             'security' => 'Security',
             'profile' => 'Profile',
             'permissions' => 'Permissions',
+            'role' => 'Roles & Permissions',
         ],
         'fields' => [
             'name' => 'Name',
@@ -57,6 +58,7 @@ return [
             'avatar' => 'Avatar',
             'is_admin' => 'Administrator',
             'is_active' => 'Active',
+            'role' => 'Roles',
         ],
         'placeholders' => [
             'name' => 'Enter full name',
@@ -67,6 +69,7 @@ return [
         'help_text' => [
             'is_admin' => 'Grant administrative privileges to this user',
             'is_active' => 'Activate or deactivate user account',
+            'role' => 'Assign one or more roles to this user',
         ],
     ],
 
