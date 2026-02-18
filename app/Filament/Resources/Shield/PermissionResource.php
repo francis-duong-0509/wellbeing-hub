@@ -26,9 +26,9 @@ class PermissionResource extends Resource
 
     protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-key';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shield';
+    protected static string | UnitEnum | null $navigationGroup = 'Admin';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {
