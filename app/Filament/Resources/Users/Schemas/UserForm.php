@@ -9,7 +9,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\Rules\Password;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Lang;
 
 class UserForm
 {
@@ -91,22 +91,20 @@ class UserForm
                             ->label(__('users.form.fields.role'))
                             ->multiple()
                             ->relationship('roles', 'name')
-                            ->getOptionLabelFromRecordUsing(fn ($record) => match ($record->name) {
-                                'super_admin' => 'Administrator',
-                                'panel_user' => 'General Member',
-                                default => ucwords(str_replace('_', ' ', $record->name)),
-                            })
+                                ->getOptionLabelFromRecordUsing(fn ($record) => Lang::has('admin.roles.' . $record->name)
+                                    ? __('admin.roles.' . $record->name)
+                                    : ucwords(str_replace('_', ' ', $record->name)))
                             ->preload()
                             ->searchable()
                             ->helperText(__('users.form.help_text.role'))
                             ->createOptionForm([
                                 TextInput::make('name')
-                                    ->label('Role Name')
+                                    ->label(__('admin.permission.permission'))
                                     ->required()
                                     ->unique()
                                     ->maxLength(255),
                                 TextInput::make('guard_name')
-                                    ->label('Guard')
+                                    ->label(__('admin.permission.guard'))
                                     ->default('web')
                                     ->required(),
                             ]),
