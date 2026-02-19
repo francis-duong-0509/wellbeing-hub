@@ -12,14 +12,14 @@ class LanguagesTable
     {
         return $table
             ->columns([
-                TextColumn::make('code')
-                    ->searchable(),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('name_native')
-                    ->searchable(),
-                TextColumn::make('dir')
-                    ->searchable(),
+                TextColumn::make('code'),
+
+                TextColumn::make('name'),
+
+                TextColumn::make('name_native'),
+
+                TextColumn::make('dir'),
+
             ])
             ->filters([
                 //

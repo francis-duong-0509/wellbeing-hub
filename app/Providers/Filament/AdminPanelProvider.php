@@ -30,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
+            ->globalSearch(false)
             ->path('admin')
             ->login()
             ->colors([
