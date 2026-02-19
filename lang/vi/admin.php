@@ -24,4 +24,20 @@ return [
         'template_id' => 'Mặt trước chứng chỉ',
         'back_template_id' => 'Mặt sau chứng chỉ',
     ],
+
+    'currency' => [
+        'name' => 'Tên',
+        'code' => 'Mã',
+        'rate' => 'Tỷ giá',
+        'symbol' => 'Ký hiệu',
+        'is_active' => 'Có hoạt động',
+    ],
+
+    'country' => [
+        'name' => 'Tên',
+        'iso2' => 'ISO2',
+        'phone_code' => 'Mã vùng',
+        'region' => 'Khu vực',
+        'subregion' => 'Khu vực phụ',
+    ],
 ];

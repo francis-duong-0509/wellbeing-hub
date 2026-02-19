@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Violet,
+                'primary' => Color::generateV3Palette('#000000'),
             ])
             ->resources([
                 RoleResource::class,

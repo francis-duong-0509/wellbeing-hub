@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Currencies\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class CurrenciesTable
@@ -13,18 +15,28 @@ class CurrenciesTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('id')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->label(trans('admin.currency.name')),
+                TextColumn::make('code')
+                    ->searchable()
+                    ->sortable()
+                    ->label(trans('admin.currency.code')),
+                TextColumn::make('symbol')
+                    ->searchable()
+                    ->sortable()
+                    ->label(trans('admin.currency.symbol')),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                ViewAction::make(),
+                /* EditAction::make(), */
             ]);
     }
 }
