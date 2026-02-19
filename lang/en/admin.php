@@ -17,4 +17,11 @@ return [
         'super_admin' => 'Administrator',
         'panel_user' => 'General Member',
     ],
+
+    'course_type' => [
+        'name' => 'Name of course type',
+        'learning_outcome' => 'Learning outcome',
+        'template_id' => 'Template ID',
+        'back_template_id' => 'Back Template ID',
+    ],
 ];

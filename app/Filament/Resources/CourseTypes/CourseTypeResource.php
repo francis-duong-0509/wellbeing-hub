@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CourseTypes;
 use App\Filament\Resources\CourseTypes\Pages\CreateCourseType;
 use App\Filament\Resources\CourseTypes\Pages\EditCourseType;
 use App\Filament\Resources\CourseTypes\Pages\ListCourseTypes;
+use App\Filament\Resources\CourseTypes\Pages\ViewCourseType;
 use App\Filament\Resources\CourseTypes\Schemas\CourseTypeForm;
 use App\Filament\Resources\CourseTypes\Tables\CourseTypesTable;
 use App\Models\CourseType;
