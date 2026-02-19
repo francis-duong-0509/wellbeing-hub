@@ -17,13 +17,25 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // 1. Check query parameter (?locale=vi) and update session if valid
+        if ($request->has('locale') && $this->isValidLocale($request->query('locale'))) {
+            $locale = $request->query('locale');
+            
+            // Set locale in session
+            Session::put('locale', $locale);
+            
+            // Set app locale immediately so it applies to current lifecycle even before redirect (optional but safe)
+            App::setLocale($locale);
+
+            // Redirect to clean URL (remove 'locale' query param) to avoid URL pollution
+            return redirect($request->fullUrlWithQuery(['locale' => null]));
+        }
+
+        // 2. Get preferred locale from session or browser
         $locale = $this->getPreferredLocale($request);
 
-        // Set application locale
+        // 3. Set application locale
         App::setLocale($locale);
-
-        // Store locale in session for persistence
-        Session::put('locale', $locale);
 
         return $next($request);
     }
@@ -33,23 +45,18 @@ class SetLocale
      */
     protected function getPreferredLocale(Request $request): string
     {
-        // 1. Check query parameter (?locale=vi)
-        if ($request->has('locale') && $this->isValidLocale($request->query('locale'))) {
-            return $request->query('locale');
-        }
-
-        // 2. Check session for stored locale
+        // Check session for stored locale
         if (Session::has('locale') && $this->isValidLocale(Session::get('locale'))) {
             return Session::get('locale');
         }
 
-        // 3. Check browser Accept-Language header
+        // Check browser Accept-Language header
         $browserLocale = $this->getBrowserLocale($request);
         if ($browserLocale) {
             return $browserLocale;
         }
 
-        // 4. Fall back to app default locale
+        // Fall back to app default locale
         return config('app.locale', 'en');
     }
 
@@ -62,7 +69,9 @@ class SetLocale
             return false;
         }
 
-        $supportedLocales = ['en', 'vi'];
+        // Best practice: Move this to config/app.php like 'supported_locales' => ['en', 'vi']
+        // For now we keep it here but easy to maintain.
+        $supportedLocales = config('app.supported_locales', ['en', 'vi', 'th']);
 
         return in_array($locale, $supportedLocales);
     }

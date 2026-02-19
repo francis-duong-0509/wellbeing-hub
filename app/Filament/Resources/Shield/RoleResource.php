@@ -24,9 +24,9 @@ class RoleResource extends Resource
 
     protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-shield-check';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shield';
+    protected static string | UnitEnum | null $navigationGroup = 'Admin';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
@@ -123,23 +123,8 @@ class RoleResource extends Resource
                     ]),
             ])
             ->actions([
-                EditAction::make()
-                    ->disabled(fn (Role $record): bool => in_array($record->name, ['super_admin', 'panel_user']))
-                    ->tooltip(fn (Role $record): ?string => in_array($record->name, ['super_admin', 'panel_user'])
-                        ? 'System role cannot be edited'
-                        : null),
-                DeleteAction::make()
-                    ->before(function (Role $record) {
-                        // Prevent deletion of system roles
-                        if (in_array($record->name, ['super_admin', 'panel_user'])) {
-                            throw new \Exception('Cannot delete system role: ' . $record->name);
-                        }
-                    }),
-            ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                EditAction::make(),
+                DeleteAction::make(),
             ]);
     }
 

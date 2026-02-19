@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Lang;
 use UnitEnum;
 
 class PermissionResource extends Resource
@@ -25,9 +26,9 @@ class PermissionResource extends Resource
 
     protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-key';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Shield';
+    protected static string | UnitEnum | null $navigationGroup = 'Admin';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {
@@ -36,24 +37,27 @@ class PermissionResource extends Resource
                 Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('Permission Name'))
+                            ->label(__('admin.permission.permission'))
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255)
-                            ->placeholder('e.g., view:User, create:Post')
-                            ->helperText('Use format: action:Resource (e.g., view:User, create:Post)'),
+                            ->placeholder(__('admin.permission.permission_placeholder'))
+                            ->helperText(__('admin.permission.permission_helper_text')),
 
                         TextInput::make('guard_name')
-                            ->label(__('Guard'))
+                            ->label(__('admin.permission.guard'))
                             ->default('web')
-                            ->required()
+                            ->hidden()
                             ->maxLength(255),
 
-                        Section::make(__('Assigned to Roles'))
+                        Section::make(__('admin.permission.assigned_to_roles'))
                             ->schema([
                                 CheckboxList::make('roles')
+                                    ->label(__('admin.permission.assigned_roles'))
                                     ->relationship('roles', 'name')
-                                    ->label('')
+                                    ->getOptionLabelFromRecordUsing(fn ($record) => Lang::has('admin.roles.' . $record->name)
+                                        ? __('admin.roles.' . $record->name)
+                                        : ucwords(str_replace('_', ' ', $record->name)))
                                     ->columns(2)
                                     ->gridDirection('row')
                                     ->searchable()
@@ -70,55 +74,49 @@ class PermissionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('Permission'))
+                    ->label(__('admin.permission.permission'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
                     ->badge()
                     ->color('primary'),
 
-                Tables\Columns\TextColumn::make('guard_name')
-                    ->label(__('Guard'))
-                    ->badge()
-                    ->color('gray')
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('roles.name')
-                    ->label(__('Assigned Roles'))
+                    ->label(__('admin.permission.assigned_roles'))
+                    ->formatStateUsing(fn (string $state): string => Lang::has('admin.roles.' . $state)
+                        ? trans('admin.roles.' . $state)
+                        : ucwords(str_replace('_', ' ', $state)))
                     ->badge()
                     ->color('success')
                     ->searchable()
                     ->separator(','),
 
-                Tables\Columns\TextColumn::make('users_count')
-                    ->label(__('Users'))
-                    ->counts('users')
-                    ->badge()
-                    ->color('warning'),
-
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('Created At'))
+                    ->label(__('admin.permission.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('Updated At'))
+                    ->label(__('admin.permission.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('guard_name')
-                    ->label(__('Guard'))
+                /* Tables\Filters\SelectFilter::make('guard_name')
+                    ->label(__('admin.permission.guard'))
                     ->options([
                         'web' => 'Web',
                         'api' => 'API',
-                    ]),
+                    ]), */
 
                 Tables\Filters\SelectFilter::make('roles')
-                    ->label(__('Role'))
+                    ->label(__('admin.permission.assigned_roles'))
                     ->relationship('roles', 'name')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => Lang::has('admin.roles.' . $record->name)
+                        ? __('admin.roles.' . $record->name)
+                        : ucwords(str_replace('_', ' ', $record->name)))
                     ->multiple()
                     ->preload(),
             ])

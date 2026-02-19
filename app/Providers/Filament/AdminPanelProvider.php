@@ -12,6 +12,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
+use App\Filament\Resources\Shield\RoleResource;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -29,10 +30,14 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
+            ->globalSearch(false)
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Violet,
+                'primary' => Color::generateV3Palette('#000000'),
+            ])
+            ->resources([
+                RoleResource::class,
             ])
             ->plugin(FilamentShieldPlugin::make())
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
