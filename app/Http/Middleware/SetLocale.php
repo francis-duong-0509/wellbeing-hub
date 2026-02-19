@@ -71,7 +71,7 @@ class SetLocale
 
         // Best practice: Move this to config/app.php like 'supported_locales' => ['en', 'vi']
         // For now we keep it here but easy to maintain.
-        $supportedLocales = config('app.supported_locales', ['en', 'vi']);
+        $supportedLocales = config('app.supported_locales', ['en', 'vi', 'th']);
 
         return in_array($locale, $supportedLocales);
     }

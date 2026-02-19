@@ -39,5 +39,7 @@ return [
         'phone_code' => 'Mã vùng',
         'region' => 'Khu vực',
         'subregion' => 'Khu vực phụ',
+        'is_active' => 'Có hoạt động',
+        'is_inactive' => 'Không hoạt động',
     ],
 ];

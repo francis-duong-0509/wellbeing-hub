@@ -51,8 +51,26 @@ class Course extends Model
         return $this->belongsTo(CourseType::class, 'course_type_id', 'id');
     }
 
+    public function country(): BelongsTo {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+
+    public function createdBy(): BelongsTo {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function teacher(): BelongsTo {
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
+
+    public function currency(): BelongsTo {
+        return $this->belongsTo(Currency::class, 'currency_id', 'id');
+    }
+
     /*=============================================== SCOPES ===============================================*/
     public function scopeActive(Builder $query) {
         return $query->where('is_active', 1);
     }
+
+    /*=============================================== HELPER METHODS ===============================================*/
 }

@@ -24,11 +24,15 @@ class CourseTypesTable
                     ->sortable()
                     ->label(__('admin.course_type.name')),
                 TextColumn::make('template_id')
-                    ->numeric()
+                    ->formatStateUsing(function ($state) {
+                        return $state == 1 ? 'Template 1' : 'Template 2';
+                    })
                     ->sortable()
                     ->label(__('admin.course_type.template_id')),
                 TextColumn::make('back_template_id')
-                    ->numeric()
+                    ->formatStateUsing(function ($state) {
+                        return $state == 1 ? 'Template 1' : 'Template 2';
+                    })
                     ->sortable()
                     ->label(__('admin.course_type.back_template_id')),
             ])

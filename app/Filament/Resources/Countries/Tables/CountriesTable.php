@@ -7,6 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class CountriesTable
@@ -39,13 +41,20 @@ class CountriesTable
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.subregion')),
+                ToggleColumn::make('is_active')
+                    ->searchable()
+                    ->label(trans('admin.country.is_active')),
             ])
             ->filters([
-                //
+                SelectFilter::make('is_active')
+                    ->label(trans('admin.country.is_active'))
+                    ->options([
+                        true => trans('admin.country.is_active'),
+                        false => trans('admin.country.is_inactive'),
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),
-                /* EditAction::make(), */
             ]);
     }
 }

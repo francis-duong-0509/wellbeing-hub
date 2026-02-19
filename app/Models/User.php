@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,5 +53,10 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
             'is_active' => 'boolean',
         ];
+    }
+
+    /*=============================================== SCOPES ===============================================*/
+    public function scopeActive(Builder $query) {
+        return $query->where('is_active', 1);
     }
 }

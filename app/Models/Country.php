@@ -12,6 +12,12 @@ class Country extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['is_active'];
+
+    protected $casts = ['is_active' => 'boolean'];
+
+    const UPDATED_AT = null;
+
     /*=============================================== RELATIONSHIPS ===============================================*/
     public function currencies(): HasMany {
         return $this->hasMany(Currency::class, 'country_id', 'id');

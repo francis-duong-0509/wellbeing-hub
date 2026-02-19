@@ -39,5 +39,7 @@ return [
         'phone_code' => 'Phone Code',
         'region' => 'Region',
         'subregion' => 'Subregion',
+        'is_active' => 'Is Active',
+        'is_inactive' => 'Is Inactive',
     ],
 ];

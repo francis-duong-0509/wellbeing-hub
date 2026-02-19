@@ -118,7 +118,7 @@ return [
     |
     */
 
-    'supported_locales' => ['en', 'vi'],
+    'supported_locales' => ['en', 'vi', 'th'],
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),

@@ -22,22 +22,6 @@ class EditRole extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        // Prevent editing system roles
-        if (in_array($this->record->name, ['super_admin', 'panel_user'])) {
-            $this->redirect($this->getResource()::getUrl('index'));
-
-            \Filament\Notifications\Notification::make()
-                ->warning()
-                ->title('System Role')
-                ->body('System roles cannot be edited.')
-                ->send();
-        }
-
-        return $data;
-    }
-
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
