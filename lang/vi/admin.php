@@ -17,4 +17,11 @@ return [
         'super_admin' => 'Quản trị viên',
         'panel_user' => 'Thành viên chung',
     ],
+
+    'course_type' => [
+        'name' => 'Tên loại khóa học',
+        'learning_outcome' => 'Kết quả học tập',
+        'template_id' => 'Mặt trước chứng chỉ',
+        'back_template_id' => 'Mặt sau chứng chỉ',
+    ],
 ];
