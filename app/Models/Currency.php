@@ -10,20 +10,7 @@ class Currency extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'country_id',
-        'name',
-        'code',
-        'rate',
-        'symbol',
-        'is_active',
-        'created_at',
-        'updated_at',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
+    protected $table = 'currencies';
 
     /*=============================================== RELATIONSHIPS ===============================================*/
     public function country(): BelongsTo {

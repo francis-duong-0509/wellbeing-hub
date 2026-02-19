@@ -24,4 +24,20 @@ return [
         'template_id' => 'Template ID',
         'back_template_id' => 'Back Template ID',
     ],
+
+    'currency' => [
+        'name' => 'Name',
+        'code' => 'Code',
+        'rate' => 'Rate',
+        'symbol' => 'Symbol',
+        'is_active' => 'Is Active',
+    ],
+
+    'country' => [
+        'name' => 'Name',
+        'iso2' => 'ISO2',
+        'phone_code' => 'Phone Code',
+        'region' => 'Region',
+        'subregion' => 'Subregion',
+    ],
 ];

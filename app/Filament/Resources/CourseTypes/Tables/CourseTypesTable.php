@@ -16,15 +16,21 @@ class CourseTypesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('id')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('admin.course_type.name')),
                 TextColumn::make('template_id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('admin.course_type.template_id')),
                 TextColumn::make('back_template_id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('admin.course_type.back_template_id')),
             ])
             ->filters([
                 //
