@@ -39,7 +39,19 @@ return [
         'phone_code' => 'รหัสโทรศัพท์',
         'region' => 'ภูมิภาค',
         'subregion' => 'ภูมิภาคย่อย',
+        'languages' => 'ภาษา',
         'is_active' => 'ใช้งานอยู่',
         'is_inactive' => 'ไม่ใช้งาน',
+    ],
+
+    'role' => [
+        'name' => 'ชื่อ',
+        'slug' => 'Slug',
+        'permissions_count' => 'สิทธิ์',
+        'permission' => 'สิทธิ์',
+        'users_count' => 'ผู้ใช้',
+        'created_at' => 'สร้างเมื่อ',
+        'updated_at' => 'อัปเดตเมื่อ',
+        'guard_name' => 'Guard Name',
     ],
 ];

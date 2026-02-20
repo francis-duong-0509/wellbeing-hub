@@ -24,10 +24,12 @@ class Course extends Model
         'capacity',
         'is_active',
         'image',
+        'thumbnail',
         'available_payment_method',
         'description',
         'limit_registration',
         'country_id',
+        'state_id',
         'created_by',
         'teacher_id',
         'currency_id',
@@ -53,6 +55,10 @@ class Course extends Model
 
     public function country(): BelongsTo {
         return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+
+    public function state(): BelongsTo {
+        return $this->belongsTo(State::class, 'state_id', 'id');
     }
 
     public function createdBy(): BelongsTo {

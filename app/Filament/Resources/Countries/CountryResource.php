@@ -46,6 +46,8 @@ class CountryResource extends Resource
     {
         return [
             'index' => ListCountries::route('/'),
+            'create' => CreateCountry::route('/create'),
+            'edit' => EditCountry::route('/{record}/edit'),
         ];
     }
 }

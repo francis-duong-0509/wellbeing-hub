@@ -41,5 +41,17 @@ return [
         'subregion' => 'Khu vực phụ',
         'is_active' => 'Có hoạt động',
         'is_inactive' => 'Không hoạt động',
+        'languages' => 'Ngôn ngữ',
+    ],
+
+    'role' => [
+        'name' => 'Tên',
+        'slug' => 'Slug',
+        'permissions_count' => 'Số lượng quyền',
+        'permission' => 'Quyền',
+        'users_count' => 'Số lượng người dùng',
+        'created_at' => 'Ngày tạo',
+        'updated_at' => 'Ngày cập nhật',
+        'guard_name' => 'Guard Name',
     ],
 ];

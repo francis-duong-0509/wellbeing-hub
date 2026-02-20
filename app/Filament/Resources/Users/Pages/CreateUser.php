@@ -11,6 +11,11 @@ class CreateUser extends CreateRecord
 
     public function getTitle(): string
     {
-        return __('users.actions.create');
+        return __('user.create');
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

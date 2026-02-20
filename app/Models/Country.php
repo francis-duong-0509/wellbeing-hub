@@ -27,8 +27,21 @@ class Country extends Model
         return $this->belongsToMany(Language::class, 'country_language');
     }
 
+    public function states(): HasMany {
+        return $this->hasMany(State::class, 'country_id', 'id');
+    }
+
     /*=============================================== SCOPES ===============================================*/
     public function scopeActive(Builder $query) {
         return $query->where('is_active', 1);
+    }
+
+    /*=============================================== METHODS ===============================================*/
+    public static function getDefaultLanguages(?int $countryId) {
+        return self::find($countryId)->languages()->pluck('name', 'code')->toArray() ?? [];
+    }
+
+    public static function getActiveCountries() {
+        return self::active()->pluck('name', 'id')->toArray();
     }
 }

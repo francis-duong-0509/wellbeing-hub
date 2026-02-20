@@ -7,6 +7,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -20,39 +21,52 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('id')
-                    ->label(__('users.table.columns.id'))
+                    ->label(__('user.id'))
                     ->sortable()
                     ->searchable(),
+
+                ImageColumn::make('avatar')
+                    ->label(__('user.avatar'))
+                    ->disk(config('filesystems.default'))
+                    ->width(50)
+                    ->circular()
+                    ->defaultImageUrl(asset('images/default-avatar.png')),
+
                 TextColumn::make('name')
-                    ->label(__('users.table.columns.name'))
+                    ->label(__('user.name'))
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('email')
-                    ->label(__('users.table.columns.email'))
+                    ->label(__('user.email'))
                     ->sortable()
                     ->searchable(),
+
                 TextColumn::make('phone_number')
-                    ->label(__('users.table.columns.phone_number'))
+                    ->label(__('user.phone_number'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('avatar')
-                    ->label(__('users.table.columns.avatar'))
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('country.name')
+                    ->label(__('user.country'))
+                    ->searchable(),
+
                 IconColumn::make('is_admin')
-                    ->label(__('users.table.columns.is_admin'))
+                    ->label(__('user.is_admin'))
                     ->boolean()
                     ->sortable(),
+
                 IconColumn::make('is_active')
-                    ->label(__('users.table.columns.is_active'))
+                    ->label(__('user.is_active'))
                     ->boolean()
                     ->sortable(),
             ])
             ->filters([
                 TernaryFilter::make('is_admin')
-                    ->label(__('users.filters.admin_status'))
-                    ->placeholder(__('users.filters.all_users'))
-                    ->trueLabel(__('users.filters.admins_only'))
-                    ->falseLabel(__('users.filters.non_admins_only'))
+                    ->label(__('user.admin_status'))
+                    ->placeholder(__('user.all_users'))
+                    ->trueLabel(__('user.admins_only'))
+                    ->falseLabel(__('user.non_admins_only'))
                     ->queries(
                         true: fn (Builder $query) => $query->where('is_admin', true),
                         false: fn (Builder $query) => $query->where('is_admin', false),
@@ -60,10 +74,10 @@ class UsersTable
                     ),
 
                 TernaryFilter::make('is_active')
-                    ->label(__('users.filters.active_status'))
-                    ->placeholder(__('users.filters.all_users'))
-                    ->trueLabel(__('users.filters.active_only'))
-                    ->falseLabel(__('users.filters.inactive_only'))
+                    ->label(__('user.active_status'))
+                    ->placeholder(__('user.all_users'))
+                    ->trueLabel(__('user.active_only'))
+                    ->falseLabel(__('user.inactive_only'))
                     ->queries(
                         true: fn (Builder $query) => $query->where('is_active', true),
                         false: fn (Builder $query) => $query->where('is_active', false),

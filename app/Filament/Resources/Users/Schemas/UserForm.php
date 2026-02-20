@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Models\Country;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,32 +18,41 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make(__('users.form.sections.basic_info'))
+                Section::make(__('user.basic_info'))
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('users.form.fields.name'))
-                            ->placeholder(__('users.form.placeholders.name'))
+                            ->label(__('user.name'))
+                            ->placeholder(__('user.name_placeholder'))
                             ->required()
                             ->maxLength(255)
                             ->autofocus(),
 
                         TextInput::make('email')
-                            ->label(__('users.form.fields.email'))
-                            ->placeholder(__('users.form.placeholders.email'))
+                            ->label(__('user.email'))
+                            ->placeholder(__('user.email_placeholder'))
                             ->email()
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
 
                         TextInput::make('phone_number')
-                            ->label(__('users.form.fields.phone_number'))
-                            ->placeholder(trans('users.form.placeholders.phone_number'))
+                            ->label(__('user.phone_number'))
+                            ->placeholder(__('user.phone_number_placeholder'))
                             ->tel()
                             ->required()
                             ->maxLength(20),
+
+                        Select::make('country_id')
+                            ->label(__('user.country'))
+                            ->placeholder(__('user.country_placeholder'))
+                            ->options(Country::getActiveCountries())
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+
                         TextInput::make('password')
-                            ->label(__('users.form.fields.password'))
-                            ->placeholder(__('users.form.placeholders.password'))
+                            ->label(__('user.password'))
+                            ->placeholder(__('user.password_placeholder'))
                             ->password()
                             ->revealable()
                             ->required(fn (string $context): bool => $context === 'create')
@@ -51,8 +61,8 @@ class UserForm
                             ->dehydrateStateUsing(fn (string $state): string => bcrypt($state)),
 
                         TextInput::make('password_confirmation')
-                            ->label(__('users.form.fields.password_confirmation'))
-                            ->placeholder(__('users.form.placeholders.password'))
+                            ->label(__('user.password_confirmation'))
+                            ->placeholder(__('user.password_placeholder'))
                             ->password()
                             ->revealable()
                             ->required(fn (string $context): bool => $context === 'create')
@@ -60,23 +70,23 @@ class UserForm
                             ->dehydrated(false),
 
                         Toggle::make('is_admin')
-                            ->label(__('users.form.fields.is_admin'))
-                            ->helperText(__('users.form.help_text.is_admin'))
+                            ->label(__('user.is_admin'))
+                            ->helperText(__('user.is_admin_help'))
                             ->inline(false)
                             ->default(false),
 
                         Toggle::make('is_active')
-                            ->label(__('users.form.fields.is_active'))
-                            ->helperText(__('users.form.help_text.is_active'))
+                            ->label(__('user.is_active'))
+                            ->helperText(__('user.is_active_help'))
                             ->inline(false)
                             ->default(true),
                     ])
                     ->columns(2),
 
-                Section::make(__('users.form.sections.profile'))
+                Section::make(__('user.profile'))
                     ->schema([
                         FileUpload::make('avatar')
-                            ->label(__('users.form.fields.avatar'))
+                            ->label(__('user.avatar'))
                             ->image()
                             ->avatar()
                             ->imageEditor()
@@ -85,10 +95,10 @@ class UserForm
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
                     ]),
 
-                Section::make(__('users.form.sections.role'))
+                Section::make(__('user.role'))
                     ->schema([
                         Select::make('roles')
-                            ->label(__('users.form.fields.role'))
+                            ->label(__('user.role'))
                             ->multiple()
                             ->relationship('roles', 'name')
                                 ->getOptionLabelFromRecordUsing(fn ($record) => Lang::has('admin.roles.' . $record->name)
@@ -96,7 +106,7 @@ class UserForm
                                     : ucwords(str_replace('_', ' ', $record->name)))
                             ->preload()
                             ->searchable()
-                            ->helperText(__('users.form.help_text.role'))
+                            ->helperText(__('user.role_help'))
                             ->createOptionForm([
                                 TextInput::make('name')
                                     ->label(__('admin.permission.permission'))

@@ -20,27 +20,39 @@ class CountriesTable
                 TextColumn::make('id')
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('iso2')
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.iso2')),
+
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.name')),
+
                 TextColumn::make('phone_code')
                     ->numeric()
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.phone_code')),
+
                 TextColumn::make('region')
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.region')),
+
                 TextColumn::make('subregion')
                     ->searchable()
                     ->sortable()
                     ->label(trans('admin.country.subregion')),
+
+                TextColumn::make('languages.name')
+                    ->label(trans('admin.country.languages'))
+                    ->badge()
+                    ->separator(', ')
+                    ->limitList(3),
+
                 ToggleColumn::make('is_active')
                     ->searchable()
                     ->label(trans('admin.country.is_active')),

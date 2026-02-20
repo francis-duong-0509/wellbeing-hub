@@ -12,14 +12,14 @@ class EditUser extends EditRecord
 
     public function getTitle(): string
     {
-        return __('users.actions.edit');
+        return __('user.edit');
     }
 
     protected function getHeaderActions(): array
     {
         return [
             DeleteAction::make()
-                ->label(__('users.actions.delete')),
+                ->label(__('user.delete')),
         ];
     }
 }
