@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->globalSearch(false)
             ->path('admin')
+            ->maxContentWidth('full')
             ->login()
             ->colors([
                 'primary' => Color::generateV3Palette('#000000'),

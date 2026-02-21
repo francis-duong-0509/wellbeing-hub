@@ -34,7 +34,12 @@ class CourseForm
                             ->live()
                             ->afterStateUpdated(function (Set $set, $state) {
                                 $set('state_id', null);
+                                
+                                $languages = Country::getDefaultLanguages($state);
+                                $set('language_code', !empty($languages) ? array_key_first($languages) : null);
+
                                 $set('currency_id', Currency::getDefaultCurrency($state));
+
                                 $teacher = User::getTeacherByCountryId($state)->first();
                                 $set('teacher_id', $teacher ? $teacher->id : null);
                             })
@@ -50,8 +55,7 @@ class CourseForm
                                 }
 
                                 return $query->getCountry($countryId);
-                            })
-                            ->required(),
+                            }),
 
                         Select::make('language_code')
                             ->label(trans('course.default_language'))
@@ -196,14 +200,18 @@ class CourseForm
                     ->searchable()
                     ->preload(),
 
-                /* Select::make('available_payment_method')
+                Select::make('available_payment_method')
                     ->label(trans('course.available_payment_method'))
                     ->options([
                         'online' => 'Online',
                         'offline' => 'Offline',
                     ])
-                    ->default('offline')
-                    ->required(), */
+                    ->default('offline'),
+
+                Checkbox::make('is_active')
+                    ->label(trans('course.is_active'))
+                    ->inline(false)
+                    ->default(true),
             ]);
     }
 }

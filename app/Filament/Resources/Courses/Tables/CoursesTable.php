@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Courses\Tables;
 
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -25,10 +26,8 @@ class CoursesTable
                     ->sortable()
                     ->label(__('course.name')),
 
-                TextColumn::make('course_type_id')
-                    ->formatStateUsing(fn($state) => $state->name)
-                    ->sortable()
-                    ->label(__('course.course_type_id')),
+                TextColumn::make('courseType.name')
+                    ->label(__('course.course_type')),
 
                 TextColumn::make('capacity')
                     ->formatStateUsing(fn ($state) => $state == 0 ? 'Unlimited' : $state)
@@ -37,22 +36,31 @@ class CoursesTable
                 TextColumn::make('fromdate')
                     ->formatStateUsing(fn($state) => $state->format('Y-m-d'))
                     ->sortable()
-                    ->label(__('course.fromdate')),
+                    ->label(__('course.fromdate'))
+                    ->badge()
+                    ->color('warning'),
 
                 TextColumn::make('todate')
                     ->formatStateUsing(fn($state) => $state->format('Y-m-d'))
                     ->sortable()
-                    ->label(__('course.todate')),
+                    ->label(__('course.todate'))
+                    ->badge()
+                    ->color('warning'),
 
                 TextColumn::make('type')
-                    ->searchable(),                
+                    ->searchable()
+                    ->label(__('course.type'))
+                    ->badge()
+                    ->color(fn($state) => $state == 'online' ? 'success' : 'danger'),
 
                 TextColumn::make('price')
                     ->label(__('course.price')),
 
                 TextColumn::make('discount_until')
+                    ->label(__('course.discount_until'))
                     ->formatStateUsing(fn($state) => $state->format('Y-m-d'))
-                    ->label(__('course.discount_until')),
+                    ->badge()
+                    ->color('warning'),
 
                 TextColumn::make('is_active')
                     ->badge()
@@ -61,18 +69,26 @@ class CoursesTable
                     ->label(__('course.is_active')),
 
                 TextColumn::make('country.name')
-                    ->label(__('course.country')),
+                    ->label(__('course.country'))
+                    ->badge()
+                    ->color('primary'),
 
                 TextColumn::make('createdBy.name')
-                    ->label(__('course.created_by')),
+                    ->label(__('course.created_by'))
+                    ->badge()
+                    ->color('secondary'),
 
                 TextColumn::make('teacher.name')
-                    ->label(__('course.teacher')),
+                    ->label(__('course.teacher'))
+                    ->badge()
+                    ->color('secondary'),
 
                 TextColumn::make('created_at')
                     ->sortable()
                     ->formatStateUsing(fn($state) => $state->format('Y-m-d'))
-                    ->label(__('course.created_at')),
+                    ->label(__('course.created_at'))
+                    ->badge()
+                    ->color('warning'),
             ])
             ->filters([
                 Filter::make('id')
@@ -98,7 +114,7 @@ class CoursesTable
                     ->label(trans('course.type')),
 
                 SelectFilter::make('course_type_id')
-                    ->label(trans('course.course_type_id'))
+                    ->label(trans('course.course_type'))
                     ->relationship('courseType', 'name')
                     ->preload(),                
 
@@ -113,9 +129,11 @@ class CoursesTable
                         ->toggle(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ]);
     }
 }

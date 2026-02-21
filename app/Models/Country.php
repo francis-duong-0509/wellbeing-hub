@@ -38,7 +38,13 @@ class Country extends Model
 
     /*=============================================== METHODS ===============================================*/
     public static function getDefaultLanguages(?int $countryId) {
-        return self::find($countryId)->languages()->pluck('name', 'code')->toArray() ?? [];
+        $country = self::find($countryId);
+
+        if (!$country) return [];
+
+        \Log::info('Language Code: ', $country->languages()->pluck('name', 'code')->toArray());
+
+        return $country->languages()->pluck('name', 'code')->toArray();
     }
 
     public static function getActiveCountries() {

@@ -2,7 +2,7 @@
 
 return [
     'name' => 'ชื่อ',
-    'course_type_id' => 'ประเภทหลักสูตร',
+    'course_type' => 'ประเภทหลักสูตร',
     'capacity' => 'ความจุ',
     'fromdate' => 'จากวันที่',
     'todate' => 'ถึงวันที่',

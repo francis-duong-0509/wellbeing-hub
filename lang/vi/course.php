@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Tên',
-    'course_type_id' => 'Loại khóa học',
+    'course_type' => 'Loại khóa học',
     'capacity' => 'Sức chứa',
     'fromdate' => 'Ngày bắt đầu',
     'todate' => 'Ngày kết thúc',

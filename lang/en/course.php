@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Name',
-    'course_type_id' => 'Course Type',
+    'course_type' => 'Course Type',
     'capacity' => 'Capacity',
     'fromdate' => 'From Date',
     'todate' => 'To Date',
