@@ -54,4 +54,6 @@ return [
         'updated_at' => 'อัปเดตเมื่อ',
         'guard_name' => 'Guard Name',
     ],
+
+    'back_to_list' => 'กลับไปยังรายการ',
 ];

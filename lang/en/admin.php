@@ -54,4 +54,6 @@ return [
         'updated_at' => 'Updated At',
         'guard_name' => 'Guard Name',
     ],
+
+    'back_to_list' => 'Back to List',
 ];

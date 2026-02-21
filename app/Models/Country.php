@@ -42,8 +42,6 @@ class Country extends Model
 
         if (!$country) return [];
 
-        \Log::info('Language Code: ', $country->languages()->pluck('name', 'code')->toArray());
-
         return $country->languages()->pluck('name', 'code')->toArray();
     }
 

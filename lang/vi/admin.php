@@ -54,4 +54,6 @@ return [
         'updated_at' => 'Ngày cập nhật',
         'guard_name' => 'Guard Name',
     ],
+
+    'back_to_list' => 'Quay lại danh sách',
 ];
