@@ -9,7 +9,7 @@ class Role extends Model
 {
     protected $table = 'roles';
 
-    protected $fillable = ['name','guard_name',];
+    protected $fillable = ['name', 'slug', 'guard_name'];
 
     const ROLE_SLUG_ADMINISTRATOR = 'administrator';
     const ROLE_SLUG_GENERAL_MEMBER = 'general-member';

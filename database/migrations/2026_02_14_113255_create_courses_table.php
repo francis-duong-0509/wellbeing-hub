@@ -28,7 +28,6 @@ return new class extends Migration
             $table->string('image', 512);
             $table->string('available_payment_method', 100);
             $table->text('description');
-            $table->string('limit_registration')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('teacher_id');

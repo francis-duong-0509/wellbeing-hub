@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -25,7 +26,7 @@ class Course extends Model
         'is_active',
         'image',
         'thumbnail',
-        'available_payment_method',
+        'available_payment_methods',
         'description',
         'limit_registration',
         'country_id',
@@ -36,17 +37,21 @@ class Course extends Model
         'language_code',
         'created_at',
         'updated_at',
+        'modified_at',
+        'modified_by',
+        'deleted_by',
+        'available_for',
+        'require_referral',
+        'has_commission',
+        'enable_registration',
+        'is_vip',
     ];
 
-    protected $casts = [
-        'fromdate' => 'datetime',
-        'todate' => 'datetime',
-        'discount_until' => 'datetime',
-        'price' => 'float',
-        'discount_price' => 'float',
-        'is_active' => 'boolean',
-        'capacity' => 'integer',
-    ];
+    const COURSE_TYPE_OFFLINE = 'offline';
+    const COURSE_TYPE_ONLINE = 'online';
+    const IS_RETREAT_NO_LIMIT = 'no_limit';
+    const IS_RETREAT_ONLY_RETREAT = 'only_retreat';
+    const IS_RETREAT_ONLY_FIRE_GATHERING = 'only_fire_gathering';
 
     /*=============================================== RELATIONSHIPS ===============================================*/
     public function courseType(): BelongsTo {
