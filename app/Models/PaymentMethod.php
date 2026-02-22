@@ -21,14 +21,40 @@ class PaymentMethod extends Model
     const PAYMENT_TYPE_MERCHANT = 3;
 
     /*=============================================== RELATIONSHIPS ===============================================*/
-    public function country(): BelongsTo
-    {
+    public function country(): BelongsTo {
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
 
     /*=============================================== SCOPES ===============================================*/
-    public function scopeActive($query)
-    {
+    public function scopeActive($query) {
         return $query->where('status', 1);
+    }
+
+    /*=============================================== ATTRIBUTES ===============================================*/
+    public function getCountryColorAttribute() {
+        return match ($this->country_id) {
+            243 => 'success',
+            221 => 'warning',
+            14 => 'danger',
+            199 => 'info',
+            default => 'primary',
+        };
+    }
+
+    public function getTypeLabelAttribute() {
+        return match ($this->type) {
+            self::TYPE_DOMESTIC => trans('payment.payment_method.domestic'),
+            self::TYPE_INTERNATIONAL => trans('payment.payment_method.international'),
+            default => trans('payment.payment_method.unknown'),
+        };
+    }
+
+    public function getPaymentTypeLabelAttribute() {
+        return match ($this->payment_type) {
+            self::PAYMENT_TYPE_CASH => trans('payment.payment_method.cash'),
+            self::PAYMENT_TYPE_BANKING => trans('payment.payment_method.banking'),
+            self::PAYMENT_TYPE_MERCHANT => trans('payment.payment_method.merchant'),
+            default => trans('payment.payment_method.unknown'),
+        };
     }
 }

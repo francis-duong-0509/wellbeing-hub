@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code', 50);
             $table->unsignedBigInteger('country_id')->nullable();
             $table->tinyInteger('type');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->integer('payment_type');
             $table->text('bank_account_info')->nullable();
             $table->string('qr_url', 255)->nullable();
