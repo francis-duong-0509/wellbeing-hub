@@ -24,17 +24,17 @@ class UserResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('users.navigation');
+        return __('user.navigation');
     }
 
     public static function getModelLabel(): string
     {
-        return __('users.model');
+        return __('user.model');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('users.plural');
+        return __('user.plural');
     }
 
     public static function form(Schema $schema): Schema

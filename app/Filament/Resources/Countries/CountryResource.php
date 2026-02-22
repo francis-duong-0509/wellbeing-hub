@@ -25,6 +25,16 @@ class CountryResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.country');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.country');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return CountryForm::configure($schema);
@@ -46,6 +56,8 @@ class CountryResource extends Resource
     {
         return [
             'index' => ListCountries::route('/'),
+            'create' => CreateCountry::route('/create'),
+            'edit' => EditCountry::route('/{record}/edit'),
         ];
     }
 }

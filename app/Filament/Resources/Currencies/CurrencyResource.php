@@ -25,6 +25,16 @@ class CurrencyResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.currency');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.currency');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return CurrencyForm::configure($schema);

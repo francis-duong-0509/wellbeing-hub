@@ -41,5 +41,33 @@ return [
         'subregion' => 'Subregion',
         'is_active' => 'Is Active',
         'is_inactive' => 'Is Inactive',
+        'languages' => 'Languages',
     ],
+
+    'role' => [
+        'name' => 'Name',
+        'slug' => 'Slug',
+        'permissions_count' => 'Permissions Count',
+        'permission' => 'Permission',
+        'users_count' => 'Users Count',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+        'guard_name' => 'Guard Name',
+    ],
+
+    'menu_name' => [
+        'language' => 'Languages',
+        'payment_method' => 'Payment Methods',
+        'payment' => 'Payment',
+        'currency' => 'Currency',
+        'country' => 'Country',
+        'permission' => 'Permission',
+        'role' => 'Role',
+        'service' => 'Service',
+        'course' => 'Course',
+        'course_type' => 'Course Type',
+        'event' => 'Event',
+    ],
+
+    'back_to_list' => 'Back to List',
 ];

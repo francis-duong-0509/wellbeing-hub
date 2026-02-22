@@ -26,12 +26,11 @@ return new class extends Migration
             $table->integer('capacity')->nullable();
             $table->boolean('is_active')->default(true);
             $table->string('image', 512);
-            $table->string('available_payment_method', 100);
+            $table->string('available_payment_method', 100)->nullable();
             $table->text('description');
-            $table->string('limit_registration')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->unsignedBigInteger('currency_id');
             $table->string('language_code', 10);
 

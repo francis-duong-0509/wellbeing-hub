@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -24,27 +25,47 @@ class Course extends Model
         'capacity',
         'is_active',
         'image',
-        'available_payment_method',
+        'thumbnail',
+        'available_payment_methods',
         'description',
         'limit_registration',
         'country_id',
+        'state_id',
         'created_by',
         'teacher_id',
         'currency_id',
         'language_code',
         'created_at',
         'updated_at',
+        'modified_at',
+        'modified_by',
+        'deleted_by',
+        'available_for',
+        'require_referral',
+        'has_commission',
+        'enable_registration',
+        'is_vip',
+        'enable_member_discount',
     ];
 
     protected $casts = [
         'fromdate' => 'datetime',
         'todate' => 'datetime',
         'discount_until' => 'datetime',
-        'price' => 'float',
-        'discount_price' => 'float',
+        'modified_at' => 'datetime',
         'is_active' => 'boolean',
-        'capacity' => 'integer',
+        'require_referral' => 'boolean',
+        'has_commission' => 'boolean',
+        'enable_registration' => 'boolean',
+        'is_vip' => 'boolean',
+        'enable_member_discount' => 'boolean',
     ];
+
+    const COURSE_TYPE_OFFLINE = 'offline';
+    const COURSE_TYPE_ONLINE = 'online';
+    const IS_RETREAT_NO_LIMIT = 'no_limit';
+    const IS_RETREAT_ONLY_RETREAT = 'only_retreat';
+    const IS_RETREAT_ONLY_FIRE_GATHERING = 'only_fire_gathering';
 
     /*=============================================== RELATIONSHIPS ===============================================*/
     public function courseType(): BelongsTo {
@@ -53,6 +74,10 @@ class Course extends Model
 
     public function country(): BelongsTo {
         return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+
+    public function state(): BelongsTo {
+        return $this->belongsTo(State::class, 'state_id', 'id');
     }
 
     public function createdBy(): BelongsTo {
@@ -72,5 +97,29 @@ class Course extends Model
         return $query->where('is_active', 1);
     }
 
-    /*=============================================== HELPER METHODS ===============================================*/
+    /*=============================================== ATTRIBUTES ===============================================*/
+    public function setAvailableForAttribute($value) {
+        $this->attributes['available_for'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function getAvailableForAttribute($value) {
+        return $value ? explode(',', $value) : [];
+    }
+
+    public function setAvailablePaymentMethodsAttribute($value) {
+        $this->attributes['available_payment_methods'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function getAvailablePaymentMethodsAttribute($value) {
+        return $value ? explode(',', $value) : [];
+    }
+
+    /*===============================================  METHODS ===============================================*/
+    public static function getRegistrationLimitOptions() {
+        return [
+            self::IS_RETREAT_NO_LIMIT => trans('course.no_limit'),
+            self::IS_RETREAT_ONLY_RETREAT => trans('course.only_retreat'),
+            self::IS_RETREAT_ONLY_FIRE_GATHERING => trans('course.only_fire_gathering'),
+        ];
+    }
 }

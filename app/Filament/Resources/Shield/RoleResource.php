@@ -12,9 +12,12 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use UnitEnum;
 
@@ -28,6 +31,16 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.role');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.role');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -35,19 +48,30 @@ class RoleResource extends Resource
                 Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('Role Name'))
+                            ->label(trans('admin.role.name'))
                             ->required()
+                            ->unique(ignoreRecord: true)                            
+                            ->maxLength(255)
+                            ->placeholder('e.g., editor')
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
+                        TextInput::make('slug')
+                            ->label(trans('admin.role.slug'))
+                            ->required()
+                            ->readOnly()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255)
-                            ->placeholder('e.g., editor, moderator'),
+                            ->placeholder('e.g., editor'),
 
                         TextInput::make('guard_name')
-                            ->label(__('Guard'))
+                            ->label(trans('admin.role.guard_name'))
                             ->default('web')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->readOnly(),
 
-                        Section::make(__('Permissions'))
+                        Section::make(trans('admin.role.permission'))
                             ->schema([
                                 CheckboxList::make('permissions')
                                     ->relationship('permissions', 'name')
@@ -59,7 +83,7 @@ class RoleResource extends Resource
                             ])
                             ->collapsible(),
                     ])
-                    ->columns(1),
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -67,8 +91,8 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label(__('Role Name'))
+                TextColumn::make('name')
+                    ->label(trans('admin.role.name'))
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
@@ -84,39 +108,32 @@ class RoleResource extends Resource
                         default => 'primary',
                     }),
 
-                /*Tables\Columns\TextColumn::make('guard_name')
+                /*TextColumn::make('guard_name')
                     ->label(__('Guard'))
                     ->badge()
                     ->color('gray')
                     ->searchable(),*/
 
-                Tables\Columns\TextColumn::make('permissions_count')
-                    ->label(__('Permissions'))
+                TextColumn::make('slug')
+                    ->label(trans('admin.role.slug'))
+                    ->searchable()
+                    ->weight('bold'),
+
+                TextColumn::make('permissions_count')
+                    ->label(trans('admin.role.permissions_count'))
                     ->counts('permissions')
                     ->badge()
                     ->color('info'),
 
-                Tables\Columns\TextColumn::make('users_count')
-                    ->label(__('Users'))
+                TextColumn::make('users_count')
+                    ->label(trans('admin.role.users_count'))
                     ->counts('users')
                     ->badge()
                     ->color('warning'),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('Created At'))
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('Updated At'))
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('guard_name')
-                    ->label(__('Guard'))
+                    ->label(trans('admin.role.guard_name'))
                     ->options([
                         'web' => 'Web',
                         'api' => 'API',

@@ -20,10 +20,20 @@ class CourseTypeResource extends Resource
 {
     protected static ?string $model = CourseType::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     protected static string | UnitEnum | null $navigationGroup = 'Courses';
     protected static ?int $navigationSort = 2;
+
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.course_type');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.course_type');
+    }
 
     public static function form(Schema $schema): Schema
     {

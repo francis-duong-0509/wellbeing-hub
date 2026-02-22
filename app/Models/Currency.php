@@ -16,4 +16,9 @@ class Currency extends Model
     public function country(): BelongsTo {
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
+
+    /*=============================================== METHODS ===============================================*/
+    public static function getDefaultCurrency(?int $countryId) {
+        return self::find($countryId)?->currency_id ?? 243;
+    }
 }
