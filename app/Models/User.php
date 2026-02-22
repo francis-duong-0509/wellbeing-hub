@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -66,6 +67,15 @@ class User extends Authenticatable
     /*=============================================== SCOPES ===============================================*/
     public function scopeActive(Builder $query) {
         return $query->where('is_active', 1);
+    }
+
+    /*=============================================== ATTRIBUTES ===============================================*/
+    public function setAvatarAttribute($value) {
+        if ($this->attributes['avatar'] !== null) {
+            Storage::disk(config('filesystems.default'))->delete($this->attributes['avatar']);
+        }
+
+        $this->attributes['avatar'] = $value;
     }
 
     /*=============================================== METHODS ===============================================*/

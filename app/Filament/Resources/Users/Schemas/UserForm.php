@@ -89,10 +89,10 @@ class UserForm
                             ->label(__('user.avatar'))
                             ->image()
                             ->avatar()
-                            ->imageEditor()
-                            ->directory('avatars')
+                            ->directory('users/avatar')
                             ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp']),
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+                            ->disk(config('filesystems.default')),
                     ]),
 
                 Section::make(__('user.role'))

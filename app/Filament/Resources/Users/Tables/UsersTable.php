@@ -13,6 +13,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UsersTable
 {
@@ -27,10 +28,9 @@ class UsersTable
 
                 ImageColumn::make('avatar')
                     ->label(__('user.avatar'))
-                    ->disk(config('filesystems.default'))
                     ->width(50)
                     ->circular()
-                    ->defaultImageUrl(asset('images/default-avatar.png')),
+                    ->defaultImageUrl(fn ($record) => storage_s3_url($record->avatar, asset('images/default-avatar.png'))),
 
                 TextColumn::make('name')
                     ->label(__('user.name'))

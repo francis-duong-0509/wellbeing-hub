@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
@@ -112,6 +113,22 @@ class Course extends Model
 
     public function getAvailablePaymentMethodsAttribute($value) {
         return $value ? explode(',', $value) : [];
+    }
+
+    public function setImageAttribute($value) {
+        if ($this->attributes['image'] !== null) {
+            Storage::disk(config('filesystems.default'))->delete($this->attributes['image']);
+        }
+
+        $this->attributes['image'] = $value;
+    }
+
+    public function setThumbnailAttribute($value) {
+        if ($this->attributes['thumbnail'] !== null) {
+            Storage::disk(config('filesystems.default'))->delete($this->attributes['thumbnail']);
+        }
+
+        $this->attributes['thumbnail'] = $value;
     }
 
     /*===============================================  METHODS ===============================================*/

@@ -28,8 +28,9 @@ class CoursesTable
                     ->sortable(),
 
                 ImageColumn::make('thumbnail')
-                            ->disk('s3')
-                            ->columnSpanFull(),
+                            ->width(50)
+                            ->circular()
+                            ->defaultImageUrl(fn ($record) => storage_s3_url($record->thumbnail, asset('images/default-course.jpeg'))),
 
                 TextColumn::make('name')
                     ->sortable()

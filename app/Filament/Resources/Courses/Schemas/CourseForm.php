@@ -130,6 +130,8 @@ class CourseForm
                     ->directory('courses/thumbnails')
                     ->disk(config('filesystems.default'))
                     ->imagePreviewHeight('200')
+                    ->maxSize(2048)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                     ->columnSpanFull(),
 
                 Section::make(trans('course.pricing'))
