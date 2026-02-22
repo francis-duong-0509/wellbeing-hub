@@ -28,4 +28,6 @@ return [
     'discount_price_must_be_less_than_the_original_price' => 'Discount price must be less than the original price',
     'currency' => 'Currency',
     'enable_member_discount' => 'Enable Member Discount',
+    'no_discount' => 'No Discount',
+    'unlimited' => 'Unlimited',
 ];

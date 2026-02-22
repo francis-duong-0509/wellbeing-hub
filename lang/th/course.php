@@ -28,4 +28,6 @@ return [
     'discount_price_must_be_less_than_the_original_price' => 'ราคาลดต้องน้อยกว่าราคาเดิม',
     'currency' => 'สกุลเงิน',
     'enable_member_discount' => 'เปิดใช้งานส่วนลดสำหรับสมาชิก',
+    'no_discount' => 'ไม่ลดราคา',
+    'unlimited' => 'ไม่จำกัด',
 ];

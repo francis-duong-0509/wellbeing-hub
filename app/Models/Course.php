@@ -45,6 +45,20 @@ class Course extends Model
         'has_commission',
         'enable_registration',
         'is_vip',
+        'enable_member_discount',
+    ];
+
+    protected $casts = [
+        'fromdate' => 'datetime',
+        'todate' => 'datetime',
+        'discount_until' => 'datetime',
+        'modified_at' => 'datetime',
+        'is_active' => 'boolean',
+        'require_referral' => 'boolean',
+        'has_commission' => 'boolean',
+        'enable_registration' => 'boolean',
+        'is_vip' => 'boolean',
+        'enable_member_discount' => 'boolean',
     ];
 
     const COURSE_TYPE_OFFLINE = 'offline';

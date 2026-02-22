@@ -28,4 +28,6 @@ return [
     'discount_price_must_be_less_than_the_original_price' => 'Giá giảm phải nhỏ hơn giá gốc',
     'currency' => 'Tiền tệ',
     'enable_member_discount' => 'Bật giảm giá cho thành viên',
+    'no_discount' => 'Không giảm giá',
+    'unlimited' => 'Không giới hạn',
 ];

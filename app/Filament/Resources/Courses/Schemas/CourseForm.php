@@ -85,7 +85,7 @@ class CourseForm
                     ->required(),
                 
                 Select::make('course_type_id')
-                    ->label(trans('course.course_type_id'))
+                    ->label(trans('course.course_type'))
                     ->relationship('courseType', 'name')
                     ->searchable()
                     ->preload()
@@ -145,6 +145,7 @@ class CourseForm
                                 ->numeric()
                                 ->default(0)
                                 ->live()
+                                ->required(fn (Get $get) => filled($get('discount_type')))
                                 ->rule(function (Get $get) {
                                     return function (string $attribute, $value, Closure $fail) use ($get) {
                                         $type = $get('discount_type');
@@ -160,7 +161,9 @@ class CourseForm
                                     };
                                 }),
 
-                            DatePicker::make('discount_until')->label(trans('course.discount_until')),
+                            DatePicker::make('discount_until')
+                                ->label(trans('course.discount_until'))
+                                ->required(fn (Get $get) => filled($get('discount_type'))),
 
                             Select::make('currency_id')
                                 ->label(trans('course.currency'))
