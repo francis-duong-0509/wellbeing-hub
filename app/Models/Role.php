@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Role extends Model
 {
@@ -22,8 +23,8 @@ class Role extends Model
     const ROLE_SLUG_FACILITY = 'facility';
     const ROLE_SLUG_VIP_CLIENT = 'vip-client';    
     const ROLE_SLUG_SUB_ADMIN = 'sub-admin';
+    const ROLE_SLUG_HR= 'hr';
     const AVAILABLE_FOR_ALL = "all";
-    const ROLE_HR= 'hr';
 
     /*=============================================== RELATIONSHIPS ===============================================*/
     public function administrators(): BelongsToMany {
@@ -32,5 +33,20 @@ class Role extends Model
 
     public function permissions(): BelongsToMany {
         return $this->belongsToMany(\Spatie\Permission\Models\Permission::class, 'role_has_permissions', 'role_id', 'permission_id');
+    }
+
+    /*=============================================== METHODS ===============================================*/
+    public static function getAvailableRoles(): array {
+        $res = [Role::AVAILABLE_FOR_ALL => Str::title(Role::AVAILABLE_FOR_ALL), ...Role::all()->mapWithKeys(function ($item) {
+            $displayName = match ($item->name) {
+                'super_admin' => 'Administrator',
+                'panel_user', 'panel_admin' => 'General Member',
+                default => Str::title(str_replace(['-', '_'], ' ', $item->name)),
+            };
+
+            return [strtolower($item->slug) => $displayName];
+        })->toArray()];
+
+        return $res;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Courses\Schemas;
 
 use App\Models\Country;
+use App\Models\Course;
 use App\Models\Currency;
 use App\Models\Role;
 use App\Models\User;
@@ -17,6 +18,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Closure;
 use Filament\Forms\Components\Checkbox;
+use Filament\Schemas\Components\Grid;
 use Illuminate\Database\Eloquent\Builder;
 
 class CourseForm
@@ -43,7 +45,7 @@ class CourseForm
                                 $teacher = User::getTeacherByCountryId($state)->first();
                                 $set('teacher_id', $teacher ? $teacher->id : null);
                             })
-                            ->required(),
+                            ->required(),                        
 
                         Select::make('state_id')
                             ->label(trans('course.state'))
@@ -75,21 +77,31 @@ class CourseForm
                     ->required()
                     ->columnSpanFull(),
                 
-                Select::make('type')
-                    ->label(trans('course.type'))
-                    ->options([
-                        'online' => 'Online',
-                        'offline' => 'Offline',
-                    ])
-                    ->default('offline')
-                    ->required(),
-                
-                Select::make('course_type_id')
-                    ->label(trans('course.course_type'))
-                    ->relationship('courseType', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Grid::make(3)
+                    ->schema([
+                        Select::make('type')
+                            ->label(trans('course.type'))
+                            ->options([
+                                'online' => 'Online',
+                                'offline' => 'Offline',
+                            ])
+                            ->default('offline')
+                            ->required(),                
+                        
+                        Select::make('course_type_id')
+                            ->label(trans('course.course_type'))
+                            ->relationship('courseType', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+
+                        Select::make('available_for')
+                            ->label(trans('course.available_for'))
+                            ->options(Role::getAvailableRoles())
+                            ->multiple()
+                            ->default([Role::AVAILABLE_FOR_ALL])
+                            ->required(),
+                    ])->columnSpanFull(),
 
                 RichEditor::make('description')
                     ->toolbarButtons([
@@ -116,7 +128,7 @@ class CourseForm
                 FileUpload::make('thumbnail')
                     ->label(trans('course.thumbnail'))
                     ->directory('courses/thumbnails')
-                    ->visibility('public')
+                    ->disk(config('filesystems.default'))
                     ->imagePreviewHeight('200')
                     ->columnSpanFull(),
 
@@ -203,18 +215,46 @@ class CourseForm
                     ->searchable()
                     ->preload(),
 
-                Select::make('available_payment_method')
-                    ->label(trans('course.available_payment_method'))
-                    ->options([
-                        'online' => 'Online',
-                        'offline' => 'Offline',
-                    ])
-                    ->default('offline'),
+                Select::make('available_payment_methods')
+                    ->label(trans('course.available_payment_methods'))
+                    ->options(function (Get $get) {
+                        $countryId = $get('country_id');
 
-                Checkbox::make('is_active')
-                    ->label(trans('course.is_active'))
-                    ->inline(false)
-                    ->default(true),
+                        if (!$countryId) return [];
+                        return payment_method_options($countryId);
+                    })
+                    ->multiple()
+                    ->required()
+                    ->columnSpanFull(),
+
+                Grid::make(5)
+                    ->schema([
+                        Select::make('limit_registration')
+                            ->label(trans('course.limit_registration'))
+                            ->options(Course::getRegistrationLimitOptions())
+                            ->default(Course::IS_RETREAT_NO_LIMIT),
+
+                        Checkbox::make('is_active')
+                            ->label(trans('course.is_active'))
+                            ->inline(false)
+                            ->default(true),
+
+                        Checkbox::make('is_vip')
+                            ->label(trans('course.is_vip'))
+                            ->inline(false)
+                            ->default(true),
+
+                        Checkbox::make('require_referral')
+                            ->label(trans('course.require_referral'))
+                            ->inline(false)
+                            ->default(true),
+
+                        Checkbox::make('enable_registration')
+                            ->label(trans('course.enable_registration'))
+                            ->inline(false)
+                            ->default(true),
+                            ])
+                    ->columnSpanFull(),
             ]);
     }
 }

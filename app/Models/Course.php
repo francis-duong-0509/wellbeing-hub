@@ -97,5 +97,29 @@ class Course extends Model
         return $query->where('is_active', 1);
     }
 
-    /*=============================================== HELPER METHODS ===============================================*/
+    /*=============================================== ATTRIBUTES ===============================================*/
+    public function setAvailableForAttribute($value) {
+        $this->attributes['available_for'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function getAvailableForAttribute($value) {
+        return $value ? explode(',', $value) : [];
+    }
+
+    public function setAvailablePaymentMethodsAttribute($value) {
+        $this->attributes['available_payment_methods'] = is_array($value) ? implode(',', $value) : $value;
+    }
+
+    public function getAvailablePaymentMethodsAttribute($value) {
+        return $value ? explode(',', $value) : [];
+    }
+
+    /*===============================================  METHODS ===============================================*/
+    public static function getRegistrationLimitOptions() {
+        return [
+            self::IS_RETREAT_NO_LIMIT => trans('course.no_limit'),
+            self::IS_RETREAT_ONLY_RETREAT => trans('course.only_retreat'),
+            self::IS_RETREAT_ONLY_FIRE_GATHERING => trans('course.only_fire_gathering'),
+        ];
+    }
 }

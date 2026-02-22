@@ -11,6 +11,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -25,6 +26,10 @@ class CoursesTable
             ->columns([
                 TextColumn::make('id')
                     ->sortable(),
+
+                ImageColumn::make('thumbnail')
+                            ->disk('s3')
+                            ->columnSpanFull(),
 
                 TextColumn::make('name')
                     ->sortable()
