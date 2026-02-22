@@ -24,6 +24,16 @@ class CourseResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'Courses';
     protected static ?int $navigationSort = 1;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.course');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.course');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return CourseForm::configure($schema);

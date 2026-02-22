@@ -55,5 +55,19 @@ return [
         'guard_name' => 'Guard Name',
     ],
 
+    'menu_name' => [
+        'language' => 'ภาษา',
+        'payment_method' => 'ช่องทางการชำระเงิน',
+        'payment' => 'การชำระเงิน',
+        'currency' => 'สกุลเงิน',
+        'country' => 'ประเทศ',
+        'permission' => 'สิทธิ์',
+        'role' => 'บทบาท',
+        'service' => 'บริการ',
+        'course' => 'หลักสูตร',
+        'course_type' => 'ประเภทหลักสูตร',
+        'event' => 'กิจกรรม',
+    ],
+
     'back_to_list' => 'กลับไปยังรายการ',
 ];

@@ -26,6 +26,16 @@ class LanguageResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.language');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.language');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return LanguageForm::configure($schema);

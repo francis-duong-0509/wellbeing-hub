@@ -31,6 +31,16 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.role');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.role');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

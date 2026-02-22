@@ -55,5 +55,19 @@ return [
         'guard_name' => 'Guard Name',
     ],
 
+    'menu_name' => [
+        'language' => 'Languages',
+        'payment_method' => 'Payment Methods',
+        'payment' => 'Payment',
+        'currency' => 'Currency',
+        'country' => 'Country',
+        'permission' => 'Permission',
+        'role' => 'Role',
+        'service' => 'Service',
+        'course' => 'Course',
+        'course_type' => 'Course Type',
+        'event' => 'Event',
+    ],
+
     'back_to_list' => 'Back to List',
 ];

@@ -55,5 +55,19 @@ return [
         'guard_name' => 'Guard Name',
     ],
 
+    'menu_name' => [
+        'language' => 'Ngôn ngữ',
+        'payment_method' => 'Phương thức thanh toán',
+        'payment' => 'Thanh toán',
+        'currency' => 'Tiền tệ',
+        'country' => 'Quốc gia',
+        'permission' => 'Quyền',
+        'role' => 'Vai trò',
+        'service' => 'Dịch vụ',
+        'course' => 'Khóa học',
+        'course_type' => 'Loại khóa học',
+        'event' => 'Sự kiện',
+    ],
+
     'back_to_list' => 'Quay lại danh sách',
 ];

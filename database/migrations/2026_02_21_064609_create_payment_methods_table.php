@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name', 255);
+            $table->string('code', 50);
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->tinyInteger('type');
+            $table->boolean('status');
+            $table->integer('payment_type');
+            $table->text('bank_account_info')->nullable();
+            $table->string('qr_url', 255)->nullable();
+
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

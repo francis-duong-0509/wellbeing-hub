@@ -24,6 +24,16 @@ class ServiceResource extends Resource
     protected static string | UnitEnum | null $navigationGroup = 'Services';
     protected static ?int $navigationSort = 1;
 
+    public static function getLabel(): ?string
+    {
+        return __('admin.menu_name.service');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return __('admin.menu_name.service');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ServiceForm::configure($schema);
